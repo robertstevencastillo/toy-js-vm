@@ -3,6 +3,7 @@ const INSTRUCTIONS = require('./instructions');
 class CPU {
   #currentInstruction = '';
   #currentInstructionIndex = 0;
+  #output;
 
   constructor(memory) {
     this.memory = memory;
@@ -20,6 +21,10 @@ class CPU {
       r1: '',
       r2: '',
     };
+  }
+
+  get programOutput() {
+    return this.#output;
   }
 
   fetch() {
@@ -46,6 +51,7 @@ class CPU {
         break;
       }
       case INSTRUCTIONS.STORE_WORD: {
+        this.#output = this.registers.r1;
         break;
       }
       case INSTRUCTIONS.ADD: {
@@ -70,8 +76,9 @@ class CPU {
     while (this.#currentInstruction !== INSTRUCTIONS.HALT) {
       this.fetch();
       this.execute();
-      console.log(this.registers);
     }
+
+    console.log(this.programOutput);
   }
 }
 

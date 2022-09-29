@@ -12,4 +12,5 @@ const programInstructions = [
 ]
 
 const cpu = new CPU(programInstructions);
+console.log(cpu);
 cpu.run()
