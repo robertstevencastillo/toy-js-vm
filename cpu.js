@@ -35,8 +35,8 @@ class CPU {
   execute() {
     // Decoding
     const operator = this.#currentInstruction.slice(0, 2);
-    const firstOperand = this.#currentInstruction.substring(2, 4);
-    const secondOperand = this.#currentInstruction.substring(4, 6);
+    const firstOperand = this.#currentInstruction.slice(2, 4);
+    const secondOperand = this.#currentInstruction.slice(4, 6);
 
     // Executing
     switch (operator) {
