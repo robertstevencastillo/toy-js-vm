@@ -5,5 +5,6 @@ const baseconvert = require('baseconvert');
 const programInstructions = ['010110', '010212', '030102', '02010e', 'ff'];
 
 const cpu = new CPU(programInstructions);
-console.log(cpu);
+console.log(cpu); // to initally view our CPU
 cpu.run();
+console.log(cpu.programOutput);

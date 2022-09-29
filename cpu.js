@@ -75,8 +75,6 @@ class CPU {
       this.fetch();
       this.execute();
     }
-
-    console.log(this.programOutput);
   }
 }
 
