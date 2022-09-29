@@ -1,6 +1,7 @@
 const INSTRUCTIONS = require('./instructions');
 
 class CPU {
+  // private fields
   #currentInstruction = '';
   #currentInstructionIndex = 0;
   #output;
@@ -8,14 +9,12 @@ class CPU {
   constructor(memory) {
     this.memory = memory;
 
-    // Array for mapping a hex value to a register
     this.registerNames = {
       pc: '0',
       r1: '10',
       r2: '12',
     };
 
-    // Array for storing values in registers
     this.registers = {
       pc: this.memory[0],
       r1: '',
@@ -42,7 +41,6 @@ class CPU {
     // Executing
     switch (operator) {
       case INSTRUCTIONS.LOAD_WORD: {
-        // For a load instruction, the first operand is the value, the second operand is the register
         if (secondOperand === this.registerNames.r1) {
           this.registers.r1 = firstOperand;
         } else {
