@@ -8,6 +8,7 @@ class CPU {
   constructor(memory) {
     this.memory = memory;
 
+    // TODO: Convert these strings to hex values
     this.registerNames = {
       pc: '0',
       r1: '10',
