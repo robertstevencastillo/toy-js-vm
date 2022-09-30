@@ -3,7 +3,6 @@ const INSTRUCTIONS = require('./instructions');
 class CPU {
   // private fields
   #currentInstruction = '';
-  #currentInstructionIndex = 0;
   #output;
 
   constructor(memory) {
@@ -13,12 +12,14 @@ class CPU {
       pc: '0',
       r1: '10',
       r2: '12',
+      zf: '14',
     };
 
     this.registers = {
-      pc: 0, // your PC register doesn't hold an instruction but it should hold an 'index'.
+      pc: 0, // your PC register doesn't hold an instruction but it should hold an 'index' (In a real CPU, it holds a memory address).
       r1: '',
       r2: '',
+      zf: 0, // zero flag register. If value stored in a register is 0, then set zf to 1, else zf stays set to 0.
     };
   }
 
@@ -54,14 +55,17 @@ class CPU {
         break;
       }
       case INSTRUCTIONS.ADD: {
+        // TODO: Convert the string within each register to a number, and then perform calculation. You can then convert it back to a string.
         this.registers.r1 = this.registers.r1 + this.registers.r2;
         break;
       }
       case INSTRUCTIONS.SUB: {
+        // TODO: Convert the string within each register to a number, and then perform calculation. You can then convert it back to a string.
         this.registers.r1 = this.registers.r1 - this.registers.r2;
         break;
       }
-      case INSTRUCTIONS.HALT: {
+      // TODO: Implement JZ Instruction
+      case INSTRUCTIONS.JZ: {
         break;
       }
       default: {
