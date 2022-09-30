@@ -37,11 +37,11 @@ class CPU {
     const operator = this.#currentInstruction;
 
     // TODO: How am I supposed to fetch the operands? Some Instructions only require one like jump, some require two
-    // const firstOperand = this.#currentInstruction.slice(2, 4);
-    // const secondOperand = this.#currentInstruction.slice(4, 6);
+    const firstOperand = this.memory[this.registers.pc + 1];
+    const secondOperand = this.memory[this.registers.pc + 2];
 
-    // Point the register to the next instruction in memory, once an instruction has been fetched and decoded
-    this.registers.pc += 1;
+    // Point the register to the next operand in memory, once an instruction has been fetched and decoded
+    this.registers.pc += 3;
 
     // Executing
     switch (operator) {
@@ -55,7 +55,7 @@ class CPU {
         break;
       }
       case INSTRUCTIONS.STORE_WORD: {
-        this.#output = this.registers.r1;
+        this.memory[this.registers.pc] = this.registers.r1;
         break;
       }
       case INSTRUCTIONS.ADD: {
