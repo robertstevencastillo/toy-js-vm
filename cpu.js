@@ -16,7 +16,7 @@ class CPU {
     };
 
     this.registers = {
-      pc: this.memory[0],
+      pc: 0, // your PC register doesn't hold an instruction but it should hold an 'index'.
       r1: '',
       r2: '',
     };
@@ -27,9 +27,7 @@ class CPU {
   }
 
   fetch() {
-    this.#currentInstruction = this.registers.pc;
-    this.#currentInstructionIndex += 1;
-    this.registers.pc = this.memory[this.#currentInstructionIndex];
+    this.#currentInstruction = this.memory[this.registers.pc];
   }
 
   execute() {
@@ -37,6 +35,9 @@ class CPU {
     const operator = this.#currentInstruction.slice(0, 2);
     const firstOperand = this.#currentInstruction.slice(2, 4);
     const secondOperand = this.#currentInstruction.slice(4, 6);
+
+    // Point the register to the next instruction in memory, once an instruction has been fetched and decoded
+    this.registers.pc += 1;
 
     // Executing
     switch (operator) {
