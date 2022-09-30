@@ -1,4 +1,3 @@
-// TODO: Convert strings to hex values
 const INSTRUCTIONS = {
   LOAD_WORD: 0x01,
   STORE_WORD: 0x02,

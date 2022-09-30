@@ -2,8 +2,7 @@ const INSTRUCTIONS = require('./instructions');
 
 class CPU {
   // private fields
-  #currentInstruction = '';
-  #output;
+  #currentInstruction = 0;
 
   constructor(memory) {
     this.memory = memory;
@@ -17,14 +16,10 @@ class CPU {
 
     this.registers = {
       pc: 0, // your PC register doesn't hold an instruction but it should hold an 'index' (In a real CPU, it holds a memory address).
-      r1: 0,
-      r2: 0,
+      r1: 10,
+      r2: 20,
       zf: 0, // zero flag register. If value stored in a register is 0, then set zf to 1, else zf stays set to 0.
     };
-  }
-
-  get programOutput() {
-    return this.#output;
   }
 
   fetch() {
@@ -33,10 +28,7 @@ class CPU {
 
   execute() {
     // Decoding
-    // TODO: How are we going to do this now that we are working with numbers instead of strings?
     const operator = this.#currentInstruction;
-
-    // TODO: How am I supposed to fetch the operands? Some Instructions only require one like jump, some require two
     const firstOperand = this.memory[this.registers.pc + 1];
     const secondOperand = this.memory[this.registers.pc + 2];
 
@@ -47,15 +39,15 @@ class CPU {
     switch (operator) {
       // TODO: The way we implemented this instruction is incorrect
       case INSTRUCTIONS.LOAD_WORD: {
-        if (secondOperand === this.registerNames.r1) {
-          this.registers.r1 = firstOperand;
+        if (firstOperand === this.registers.r1) {
+          this.registers.r1 = this.memory[secondOperand];
         } else {
-          this.registers.r2 = firstOperand;
+          this.registers.r2 = this.memory[secondOperand];
         }
         break;
       }
       case INSTRUCTIONS.STORE_WORD: {
-        this.memory[this.registers.pc] = this.registers.r1;
+        this.memory[secondOperand] = this.registers.r1;
         break;
       }
       case INSTRUCTIONS.ADD: {
@@ -68,17 +60,17 @@ class CPU {
       }
       // TODO: Implement JZ Instruction
       case INSTRUCTIONS.JZ: {
+        if (this.registers.zf) return; // Exit
         break;
       }
       default: {
         break;
       }
     }
-    return operator;
   }
 
   run() {
-    while (this.#currentInstruction !== INSTRUCTIONS.HALT) {
+    while (this.memory[this.registers.pc] !== INSTRUCTIONS.HALT) {
       this.fetch();
       this.execute();
     }
