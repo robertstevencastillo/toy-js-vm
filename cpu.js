@@ -37,7 +37,6 @@ class CPU {
 
     // Executing
     switch (operator) {
-      // TODO: The way we implemented this instruction is incorrect
       case INSTRUCTIONS.LOAD_WORD: {
         if (firstOperand === this.registers.r1) {
           this.registers.r1 = this.memory[secondOperand];
